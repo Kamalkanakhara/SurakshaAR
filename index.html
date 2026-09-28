@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SurakshaAR – AR Industrial Safety Training</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f4f6f9;--card:#fff;--tx:#14213d;--mut:#5b6678;--navy:#0f1b33;--or:#ff7a00;--yl:#ffc61a;--ok:#12a150;--bad:#d93025;--bd:#e2e6ee}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1220;--card:#141e33;--tx:#eef2f9;--mut:#9aa7bd;--bd:#26324b}}
+:root[data-theme="dark"]{--bg:#0b1220;--card:#141e33;--tx:#eef2f9;--mut:#9aa7bd;--bd:#26324b}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.5}
+h1,h2,h3{margin:.2em 0}h2{font-size:1.6rem}.mut{color:var(--mut)}
+nav{background:var(--navy);color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:9;display:flex;gap:6px;align-items:center;padding:10px 16px;flex-wrap:wrap}
+nav b{font-size:1.2rem;margin-right:10px}nav b span{color:var(--or)}
+nav button.l{background:none;border:0;color:#cbd5e6;padding:6px 10px;border-radius:8px;cursor:pointer;font:inherit;font-size:.9rem}
+nav button.l.on,nav button.l:hover{background:#ffffff1c;color:#fff}
+.sp{flex:1}select{border-radius:8px;padding:6px;font:inherit}
+.btn{background:var(--or);color:#fff;border:0;padding:10px 18px;border-radius:10px;font:inherit;font-weight:600;cursor:pointer;transition:.15s}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.08)}.btn.s{background:transparent;border:1.5px solid var(--or);color:var(--or)}
+.btn.g{background:var(--ok)}
+main{max-width:1150px;margin:auto;padding:20px 16px 60px}
+.view{display:none}.view.on{display:block}
+.hero{background:linear-gradient(135deg,#0f1b33,#1d2f57);color:#fff;border-radius:20px;padding:36px;display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:center}
+.hero h1{font-size:2.3rem;line-height:1.15}.hero p{color:#cbd5e6}
+.badge{display:inline-block;background:#ffffff18;border:1px solid #ffffff30;border-radius:99px;padding:4px 12px;margin:3px;font-size:.8rem}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;box-shadow:0 2px 8px #0001;transition:.15s}
+.card:hover{box-shadow:0 6px 18px #0002}
+.ico{font-size:1.8rem}
+.phone{width:250px;height:470px;margin:auto;background:#000;border-radius:34px;padding:10px;box-shadow:0 20px 50px #0008}
+.scr{width:100%;height:100%;border-radius:26px;overflow:hidden;position:relative;background:linear-gradient(#3a4256,#1c212e 60%,#2b2f3a)}
+.tag{position:absolute;background:#000b;color:#fff;font-size:.7rem;padding:3px 8px;border-radius:6px;border:1px solid var(--yl)}
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.flow span{background:var(--card);border:1px solid var(--bd);padding:8px 12px;border-radius:10px;font-size:.85rem}.flow i{color:var(--or);font-style:normal}
+.prog{height:10px;background:var(--bd);border-radius:9px;overflow:hidden}.prog div{height:100%;background:linear-gradient(90deg,var(--or),var(--yl));transition:.4s}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;padding:10px 12px;border:1.5px solid var(--bd);background:var(--card);color:var(--tx);border-radius:10px;font:inherit;cursor:pointer}
+.opt:hover{border-color:var(--or)}.opt.ok{background:#12a15022;border-color:var(--ok)}.opt.no{background:#d9302422;border-color:var(--bad)}
+.fb{margin-top:8px;padding:10px;border-radius:10px;font-size:.9rem}.fb.ok{background:#12a15022}.fb.no{background:#d9302422}
+.ar{position:relative;height:420px;border-radius:18px;overflow:hidden;background:linear-gradient(180deg,#586178 0%,#2c3242 55%,#1a1e29 55%);border:4px solid #000;max-width:720px;margin:auto}
+.ar .ov{position:absolute;transition:.4s;opacity:0;pointer-events:none}.ar.scan .ov.sc{opacity:1}.ar.haz .ov.hz{opacity:1}.ar.ins .ov.in{opacity:1}
+.ar .machine{position:absolute;left:30%;top:38%;width:26%;height:32%;background:#6b7385;border-radius:8px}
+.cross{position:absolute;left:50%;top:50%;width:40px;height:40px;margin:-20px;border:2px solid #fff8;border-radius:50%}
+.arlab{position:absolute;top:8px;left:8px;background:#000b;color:var(--yl);font-size:.72rem;padding:4px 8px;border-radius:6px}
+.scanline{position:absolute;left:0;right:0;height:3px;background:var(--yl);box-shadow:0 0 12px var(--yl);display:none}.ar.scanning .scanline{display:block;animation:sl 1.6s linear}
+@keyframes sl{from{top:0}to{top:100%}}
+table{width:100%;border-collapse:collapse;font-size:.88rem}th,td{padding:8px;text-align:left;border-bottom:1px solid var(--bd)}
+.wrap{overflow-x:auto}
+.pill{padding:2px 9px;border-radius:99px;font-size:.75rem;font-weight:600}.pill.ok{background:#12a15025;color:var(--ok)}.pill.no{background:#d9302425;color:var(--bad)}.pill.w{background:#ffc61a40;color:#a56a00}
+.bars .r{display:flex;align-items:center;gap:8px;margin:6px 0;font-size:.85rem}.bars .r label{width:120px}.bars .r div{height:14px;background:linear-gradient(90deg,var(--or),var(--yl));border-radius:7px}
+.cert{background:#fffdf5;color:#1a1a1a;border:6px double var(--or);border-radius:8px;padding:28px;text-align:center;max-width:640px;margin:auto}
+.qr{width:90px;height:90px;margin:auto;display:grid;grid-template-columns:repeat(9,1fr);gap:1px}.qr i{background:#111}.qr i.w{background:#fff}
+.admin{display:grid;grid-template-columns:170px 1fr;gap:14px}.side{background:var(--navy);color:#cbd5e6;border-radius:14px;padding:12px;font-size:.88rem}.side div{padding:7px 8px;border-radius:8px}.side div:first-child{background:#ffffff1c;color:#fff}
+.stat{font-size:1.6rem;font-weight:700}
+input,.sel{padding:8px;border-radius:8px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font:inherit}
+.modal{position:fixed;inset:0;background:#000a;display:none;align-items:center;justify-content:center;z-index:20;padding:16px}.modal.on{display:flex}.modal .card{max-width:480px;width:100%;max-height:85vh;overflow:auto}
+.toast{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));background:var(--navy);color:#fff;padding:12px 16px;border-radius:12px;display:none;z-index:30;border-left:4px solid var(--or)}
+.stat-off{padding:6px 12px;border-radius:99px;font-weight:600;background:#12a15025;color:var(--ok);display:inline-block}
+@media(max-width:800px){.hero{grid-template-columns:1fr;padding:22px}.hero h1{font-size:1.7rem}.admin{grid-template-columns:1fr}.side{display:flex;overflow-x:auto;gap:4px}}
+.arx{position:relative;max-width:780px;margin:auto;aspect-ratio:16/10;border-radius:18px;overflow:hidden;border:5px solid #000;background:#222}
+.arx .cam{position:absolute;inset:0;animation:sway 7s ease-in-out infinite alternate}
+@keyframes sway{from{transform:scale(1.06) translate(-7px,2px)}to{transform:scale(1.06) translate(7px,-3px)}}
+.arx svg{width:100%;height:100%;display:block}.arx .g{opacity:0;transition:opacity .5s}
+.arx.sc .g-sc,.arx.hz .g-hz,.arx.pp .g-pp,.arx.ex .g-ex,.arx.pa .g-pa{opacity:1}
+.lb{fill:#000c;stroke:#ffc61a;stroke-width:2}.lt{font:700 18px system-ui,sans-serif;fill:#fff}
+.dashy{stroke-dasharray:14 10;animation:dsh 1s linear infinite}@keyframes dsh{to{stroke-dashoffset:-24}}
+.pls{animation:pl 1.1s ease-in-out infinite}@keyframes pl{50%{opacity:.3}}
+.hud{position:absolute;left:0;right:0;pointer-events:none;color:#fff;font-size:.78rem;z-index:2}
+.hudt{top:0;padding:8px 12px;display:flex;justify-content:space-between;background:linear-gradient(#000b,transparent)}
+.hudb{bottom:0;padding:26px 12px 10px;background:linear-gradient(transparent,#000d);font-size:.92rem}
+.xh{position:absolute;left:50%;top:50%;width:44px;height:44px;margin:-22px;border:2px solid #fffa;border-radius:50%;z-index:2}.xh:after{content:"";position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px;background:#ffc61a;border-radius:50%}
+.arx .sl{position:absolute;left:0;right:0;height:4px;background:var(--yl);box-shadow:0 0 14px var(--yl);display:none;z-index:2}.arx.scanning .sl{display:block;animation:sl 1.6s linear}
+</style></head><body>
+<nav>
+<b>Suraksha<span>AR</span></b>
+<button class="l on" data-v="home">Home</button><button class="l" data-v="worker">Worker Training</button><button class="l" data-v="ar">AR Simulator</button><button class="l" data-v="modules">Safety Modules</button><button class="l" data-v="assess">Assessment</button><button class="l" data-v="certs">Certificates</button><button class="l" data-v="admin">Admin Dashboard</button><button class="l" data-v="about">About</button>
+<span class="sp"></span>
+<select id="lang" aria-label="Language"><option value="en">English</option><option value="hi">हिंदी</option><option value="sat">संताली</option></select>
+<button class="btn" data-v="worker" id="startBtn">Start Training</button>
+<button class="btn s" onclick="demo()">View Demo</button>
+<button class="l" onclick="notif()" aria-label="Notifications">🔔</button>
+</nav>
+<main>
+
+<section class="view on" id="home">
+<div class="hero"><div>
+<h1 id="h1">Industrial Safety Training, Reimagined with AR</h1>
+<p>SurakshaAR brings practical safety training to workers through affordable Android smartphones, using Augmented Reality, interactive simulations, assessments and digital certification.</p>
+<p><b style="color:var(--yl)">Learn Safety. Practice Safely. Work Confidently.</b></p>
+<div><span class="badge">🥽 AR Training</span><span class="badge">📴 Offline Mode</span><span class="badge">🌐 Hindi + Santali</span><span class="badge">📝 Smart Assessment</span><span class="badge">🔳 QR Certificates</span><span class="badge">📊 Admin Dashboard</span></div><br>
+<button class="btn" data-v="worker">Start Training</button> <button class="btn s" data-v="about">Explore Solution</button></div>
+<div class="phone"><div class="scr">
+<div class="tag" style="top:16px;left:12px">⛑ PPE required</div>
+<div style="position:absolute;left:70px;top:150px;width:110px;height:120px;background:#6b7385;border-radius:8px"></div>
+<div class="tag" style="top:120px;left:60px;border-color:#ff4b3a">⚠ Hazard zone 2m</div>
+<div class="tag" style="bottom:110px;right:14px;border-color:#37d67a">➜ Exit 14m</div>
+<div style="position:absolute;bottom:60px;left:0;right:0;text-align:center;font-size:2rem">🧯</div>
+<div class="arlab" style="top:auto;bottom:10px;left:10px">AR Prototype</div></div></div></div>
+
+<h2 style="margin-top:34px">The Safety Training Challenge</h2>
+<div class="grid">
+<div class="card"><div class="ico">📖</div><b>Limited Practical Training</b><p class="mut">Classroom training relies on manuals and lectures instead of realistic practice.</p></div>
+<div class="card"><div class="ico">💸</div><b>Expensive Simulation</b><p class="mut">VR gear and physical simulators are costly to deploy at smaller worksites.</p></div>
+<div class="card"><div class="ico">🗣</div><b>Language Barrier</b><p class="mut">Workers may prefer Hindi or Santali and have varying literacy.</p></div>
+<div class="card"><div class="ico">🚨</div><b>Disrupted Live Drills</b><p class="mut">Real drills interrupt operations and are hard to run often.</p></div>
+<div class="card"><div class="ico">📄</div><b>Certificate Verification</b><p class="mut">Paper certificates are hard to verify and don't prove understanding.</p></div>
+<div class="card"><div class="ico">📉</div><b>Limited Tracking</b><p class="mut">No central view of training, scores, certificates and compliance.</p></div></div>
+<div class="card" style="margin-top:14px"><b>Traditional Training → SurakshaAR</b><p class="mut">Manuals & lectures → AR practice · Paper certificates → QR digital certificates · Manual tracking → live dashboard · English-only → Hindi + Santali · Needs connectivity → offline-first</p></div>
+
+<h2 style="margin-top:34px">One Platform. Complete Safety Training Ecosystem.</h2>
+<div class="flow"><span>Worker Registration</span><i>→</i><span>Safety Training</span><i>→</i><span>AR Simulation</span><i>→</i><span>Assessment</span><i>→</i><span>Pass/Fail</span><i>→</i><span>Digital Certificate</span><i>→</i><span>QR Verification</span><i>→</i><span>Admin Monitoring</span></div>
+
+<h2 style="margin-top:34px">Offline Mode</h2>
+<div class="card"><p class="mut">Download modules, run scenarios and assessments locally, sync progress and certificates when internet returns.</p>
+<span class="stat-off" id="offst">Online</span> <button class="btn s" onclick="offline()">Toggle Offline Demo</button></div>
+</section>
+
+<section class="view" id="worker">
+<div style="max-width:460px;margin:auto">
+<div class="card" style="background:var(--navy);color:#fff"><div id="login">
+<h3>Worker Login</h3><p style="color:#cbd5e6">Demo worker ID: JH-MIN-004821</p><input value="JH-MIN-004821" style="width:100%;margin-bottom:8px"><button class="btn" style="width:100%" onclick="login()">Login</button></div>
+<div id="dash" style="display:none"><h3>👷 Rahul Kumar</h3><div style="color:#cbd5e6">Mining Worker · Dhanbad, Jharkhand</div>
+<p>Training progress: <b>68%</b></p><div class="prog"><div style="width:68%"></div></div>
+<button class="btn" style="margin-top:12px" data-v="modules">Continue Training</button></div></div>
+<div id="dcards" style="display:none" class="grid" ><div class="card"><small class="mut">Completed Modules</small><div class="stat">4/6</div></div><div class="card"><small class="mut">Assessment Score</small><div class="stat">84%</div></div><div class="card"><small class="mut">Certificate</small><div class="stat" style="color:var(--ok)">Active</div></div><div class="card"><small class="mut">Next Training Due</small><div class="stat" style="font-size:1.1rem">15 Oct 2026</div></div><div class="card"><small class="mut">Safety Score</small><div class="stat">⭐ 1,240</div></div><div class="card"><small class="mut">Badges</small><div>🏆 🔥 🛡 🚨</div><small class="mut">Streak: 7 days</small></div></div>
+</div></section>
+
+<section class="view" id="modules">
+<h2>Safety Training Modules</h2><p class="mut">Pick a module, then complete its interactive scenario.</p>
+<div class="grid" id="modgrid"></div>
+<div class="card" style="margin-top:16px;display:none" id="scn"></div>
+</section>
+
+<section class="view" id="ar">
+<h2>AR Safety Simulator</h2>
+<p class="mut">Point your smartphone camera at your surroundings and learn safety procedures through interactive AR instructions.</p>
+<div class="arx" id="arbox"><div class="cam"><svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">
+<rect width="800" height="280" fill="#4b556b"/><rect width="800" height="34" fill="#39415a"/><rect x="120" y="10" width="130" height="8" fill="#fff6b8"/><rect x="340" y="10" width="130" height="8" fill="#fff6b8"/><rect x="560" y="10" width="130" height="8" fill="#fff6b8"/>
+<polygon points="0,280 800,280 800,500 0,500" fill="#2a2f3b"/><path d="M400 280 L60 500 M400 280 L250 500 M400 280 L550 500 M400 280 L760 500" stroke="#3a4152" stroke-width="2"/><rect y="272" width="800" height="8" fill="#c9a000" opacity=".7"/>
+<rect x="300" y="150" width="210" height="140" rx="8" fill="#7c869e"/><rect x="330" y="118" width="60" height="34" fill="#5f6981"/><circle cx="360" cy="215" r="34" fill="#4a5266" stroke="#a3aec6" stroke-width="6"/><circle cx="360" cy="215" r="8" fill="#20232d"/><path d="M360 181v68M326 215h68" stroke="#a3aec6" stroke-width="5"/><rect x="420" y="203" width="80" height="24" rx="12" fill="#2c3040"/><rect x="440" y="245" width="52" height="38" rx="4" fill="#3c445a"/><circle cx="466" cy="264" r="10" fill="#e02020"/><rect x="300" y="282" width="210" height="8" fill="#e6b800"/>
+<polygon points="270,292 540,292 610,390 200,390" fill="none" stroke="#e6b800" stroke-width="5" stroke-dasharray="18 10"/>
+<rect x="640" y="120" width="110" height="160" fill="#1f4d3a" stroke="#0e2a20" stroke-width="4"/><rect x="668" y="140" width="54" height="140" fill="#3f9d78" opacity=".5"/><rect x="650" y="86" width="90" height="28" rx="4" fill="#12a150"/><text x="695" y="106" text-anchor="middle" fill="#fff" font-size="17" font-weight="700">EXIT ➜</text>
+<rect x="90" y="175" width="36" height="92" rx="10" fill="#d02020"/><rect x="99" y="160" width="18" height="18" fill="#222"/><path d="M117 166h18v14" stroke="#222" fill="none" stroke-width="4"/><rect x="82" y="118" width="52" height="38" fill="#d02020"/><text x="108" y="146" text-anchor="middle" font-size="24">🧯</text>
+<rect x="170" y="168" width="92" height="62" fill="#39415a"/><path d="M190 216a26 26 0 0 1 52 0z" fill="#ffc61a"/><rect x="186" y="215" width="60" height="6" rx="3" fill="#e0a800"/>
+<g class="g g-sc"><rect x="76" y="112" width="66" height="160" rx="6" fill="none" stroke="#37d67a" stroke-width="3"/><rect x="30" y="66" width="230" height="34" rx="6" class="lb" style="stroke:#37d67a"/><text x="40" y="90" class="lt">🧯 Extinguisher · 3 m</text><rect x="630" y="80" width="130" height="205" rx="6" fill="none" stroke="#37d67a" stroke-width="3"/><rect x="578" y="44" width="170" height="34" rx="6" class="lb" style="stroke:#37d67a"/><text x="588" y="68" class="lt">🚪 Exit · 14 m</text></g>
+<g class="g g-hz"><polygon points="270,292 540,292 610,390 200,390" fill="#ff3b30" fill-opacity=".22" stroke="#ff3b30" stroke-width="5" class="dashy"/><circle cx="360" cy="215" r="44" fill="none" stroke="#ff3b30" stroke-width="4" class="pls"/><line x1="360" y1="171" x2="360" y2="120" stroke="#ff3b30" stroke-width="3"/><rect x="275" y="86" width="190" height="34" rx="6" class="lb" style="stroke:#ff3b30"/><text x="285" y="110" class="lt">⚙ Moving parts</text><rect x="300" y="340" width="250" height="34" rx="6" class="lb" style="stroke:#ff3b30"/><text x="310" y="364" class="lt">⚠ HAZARD · keep 2 m</text><rect x="436" y="242" width="60" height="44" rx="4" fill="none" stroke="#ff3b30" stroke-width="3"/><rect x="540" y="234" width="130" height="34" rx="6" class="lb" style="stroke:#ff3b30"/><text x="550" y="258" class="lt">🔴 E-STOP</text></g>
+<g class="g g-pp"><rect x="160" y="158" width="112" height="82" rx="6" fill="none" stroke="#ffc61a" stroke-width="3" class="pls"/><rect x="110" y="246" width="270" height="34" rx="6" class="lb" style="stroke:#ffc61a"/><text x="120" y="270" class="lt">⛑ Helmet · Goggles · Gloves</text></g>
+<g class="g g-ex"><rect x="76" y="112" width="66" height="160" rx="6" fill="#ff3b30" fill-opacity=".2" stroke="#ff3b30" stroke-width="4" class="pls"/><rect x="30" y="290" width="210" height="34" rx="6" class="lb" style="stroke:#ff3b30"/><text x="40" y="314" class="lt">🧯 3 m on your left</text></g>
+<g class="g g-pa"><circle cx="720" cy="420" r="30" fill="#12a150" fill-opacity=".55"/><text x="720" y="430" text-anchor="middle" font-size="28" fill="#fff">✚</text><polyline points="390,480 470,410 590,340 665,290" fill="none" stroke="#37d67a" stroke-width="12" class="dashy"/><polygon points="665,270 690,300 650,305" fill="#37d67a"/><rect x="430" y="444" width="250" height="34" rx="6" class="lb" style="stroke:#37d67a"/><text x="440" y="468" class="lt">➜ Assembly Point · 40 m</text></g>
+</svg></div><div class="sl"></div><div class="xh"></div>
+<div class="hud hudt"><span>🔴 LIVE · AR Simulation Prototype</span><span id="arstep">Ready</span></div>
+<div class="hud hudb"><b id="ari">Tap “Scan Environment” to begin</b><div id="ard"></div></div></div>
+<div style="text-align:center;margin:12px"><button class="btn" onclick="arScan()">Scan Environment</button> <button class="btn s" onclick="arSim()">Start Simulation</button> <button class="btn" id="arnext" style="display:none" onclick="arNext()">Next Step</button> <button class="btn s" onclick="arTog('hz')">Show Hazards</button> <button class="btn s" onclick="arIns()">Show Safety Instructions</button> <button class="btn s" onclick="arReset()">Reset Scenario</button>
+<p class="mut">Prototype Simulation – Final implementation will use Android AR. Tip: press <b>Start Simulation</b> for a guided 6-step walkthrough.</p></div>
+</section>
+
+<section class="view" id="assess"><div style="max-width:620px;margin:auto"><h2>Safety Knowledge Assessment</h2><div class="card" id="qbox"></div></div></section>
+
+<section class="view" id="certs">
+<h2>Digital Certificate</h2>
+<div class="cert" id="certbox">
+<div style="color:var(--or);font-weight:800;letter-spacing:3px">SURAKSHAAR</div><h3>Certificate of Industrial Safety Training</h3>
+<p>This certifies that</p><h2 id="cname">Rahul Kumar</h2><p>has successfully completed</p><b>Fire &amp; Explosion Response Training</b><p>Score: <b id="cscore">84%</b></p>
+<div class="qr" id="qr"></div>
+<p style="font-size:.85rem">ID: <b>SAR-JH-2026-004821</b><br>Issued: 28 September 2026 · Valid until: 28 September 2027<br>Provider: SurakshaAR Training · Status: <span style="color:var(--ok)">✓ Verified</span></p>
+<i style="color:#888">[Digital signature placeholder]</i></div>
+<div style="text-align:center;margin:12px"><button class="btn" onclick="fillVerify()">Verify Certificate</button></div>
+<h2 id="vsec">Verify Safety Certificate</h2>
+<div class="card"><input id="cid" placeholder="Enter Certificate ID" style="width:min(320px,100%)"> <button class="btn" onclick="verify()">Verify</button> <button class="btn s" onclick="scanQR()">Scan QR Code</button>
+<div id="vres" class="fb" style="display:none"></div><p class="mut">Try SAR-JH-2026-004821 (valid) or SAR-JH-2026-999999 (not found).</p></div>
+<h2 style="margin-top:24px">Multilingual Support</h2>
+<div class="card"><b>Choose Your Language</b> — use the selector in the top bar.
+<p>“Identify the emergency exit.” → <b id="ltxt">Identify the emergency exit.</b></p>
+<span class="badge" style="color:var(--tx)">🔊 Voice</span><span class="badge" style="color:var(--tx)">📝 Text</span><span class="badge" style="color:var(--tx)">⚠ Visual symbols</span>
+<p class="mut">Symbols reduce dependence on text-heavy training. Santali is a localization placeholder.</p></div>
+</section>
+
+<section class="view" id="admin">
+<h2>Safety Compliance Dashboard</h2>
+<div class="admin"><div class="side"><div>Dashboard</div><div>Workers</div><div>Training</div><div>Assessments</div><div>Certificates</div><div>Compliance</div><div>Reports</div><div>Locations</div><div>Settings</div></div>
+<div>
+<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(140px,1fr))">
+<div class="card"><small class="mut">Total Workers</small><div class="stat">1,248</div></div><div class="card"><small class="mut">Trained</small><div class="stat">1,086</div></div><div class="card"><small class="mut">Pending</small><div class="stat">162</div></div><div class="card"><small class="mut">Certs Active</small><div class="stat">932</div></div><div class="card"><small class="mut">Expiring</small><div class="stat">74</div></div><div class="card"><small class="mut">Avg Score</small><div class="stat">82%</div></div></div>
+<div class="grid" style="margin-top:14px">
+<div class="card bars"><b>Module Performance</b>
+<div class="r"><label>Fire</label><div style="width:84%"></div>84</div><div class="r"><label>Gas &amp; Confined</label><div style="width:76%"></div>76</div><div class="r"><label>Machinery</label><div style="width:81%"></div>81</div><div class="r"><label>PPE</label><div style="width:90%"></div>90</div><div class="r"><label>Evacuation</label><div style="width:85%"></div>85</div></div>
+<div class="card bars"><b>Training by Location</b>
+<div class="r"><label>Dhanbad</label><div style="width:90%"></div></div><div class="r"><label>Ranchi</label><div style="width:70%"></div></div><div class="r"><label>Bokaro</label><div style="width:60%"></div></div><div class="r"><label>Jamshedpur</label><div style="width:75%"></div></div><div class="r"><label>Others</label><div style="width:35%"></div></div>
+<small class="mut">Completion 87% · Certs: 932 active / 74 expiring / 60 expired</small></div></div>
+<div class="card" style="margin-top:14px"><b>⚠ Compliance Alerts</b><p>12 workers have certificates expiring within 30 days.<br>24 workers have incomplete mandatory training.<br>8 workers failed their latest assessment.</p>
+<button class="btn s" onclick="toast('Reminders sent to 36 workers')">Send Reminder</button> <button class="btn s" onclick="document.getElementById('fs').value='Pending';filt()">View Workers</button> <button class="btn s" onclick="toast('Training scheduled')">Schedule Training</button></div>
+<div class="card" style="margin-top:14px"><b>Workers</b><br><br>
+<input id="q" placeholder="Search name / ID" oninput="filt()"> <select class="sel" id="fl" onchange="filt()"><option value="">All locations</option><option>Dhanbad</option><option>Ranchi</option><option>Bokaro</option><option>Jamshedpur</option></select> <select class="sel" id="fs" onchange="filt()"><option value="">All training</option><option>Completed</option><option>Pending</option></select> <select class="sel" id="fc" onchange="filt()"><option value="">All certificates</option><option>Active</option><option>Expiring</option><option>Expired</option></select>
+<div class="wrap"><table><thead><tr><th>Name</th><th>ID</th><th>Role</th><th>Location</th><th>Training</th><th>Score</th><th>Certificate</th><th>Expiry</th><th></th></tr></thead><tbody id="wt"></tbody></table></div></div>
+<div class="card" style="margin-top:14px"><b>Reports</b><br><br><select class="sel" id="rp"><option>Training Completion Report</option><option>Assessment Report</option><option>Certificate Report</option><option>Worker Compliance Report</option><option>Location-wise Report</option><option>Module Performance Report</option></select> <button class="btn" onclick="rep()">Generate Report</button> <button class="btn s" onclick="toast('PDF export started (demo)')">Export PDF</button> <button class="btn s" onclick="toast('CSV export started (demo)')">Export CSV</button>
+<div id="rprev" class="fb" style="display:none;background:var(--bg)"></div></div>
+</div></div></section>
+
+<section class="view" id="about">
+<h2>About the Solution</h2>
+<div class="card"><p>SurakshaAR is a scalable digital safety-training ecosystem for workers in industrial environments. The prototype shows how AR, mobile technology, multilingual content, assessments and digital certification can work together to improve the accessibility and management of safety training.</p></div>
+<h3 style="margin-top:20px">Proposed Technology Stack</h3>
+<div class="flow"><span>Android app</span><i>→</i><span>AR engine (ARCore)</span><i>→</i><span>Local storage (Room)</span><i>→</i><span>Assessment</span><i>→</i><span>Certification</span><i>→</i><span>REST API</span><i>→</i><span>Database</span><i>→</i><span>Web admin</span></div>
+<p class="mut">QR Verification Portal connects to the certification system. Kotlin, ARCore and Room are proposed, not implemented in this web prototype.</p>
+<h3 style="margin-top:20px">Built for Trust and Accountability</h3>
+<div class="grid"><div class="card">🔐 Worker authentication</div><div class="card">🆔 Secure certificate IDs</div><div class="card">🔳 QR verification</div><div class="card">👤 Role-based admin access</div><div class="card">🗂 Assessment records &amp; audit history</div><div class="card">🔄 Secure sync &amp; expiry tracking</div></div>
+<h3 style="margin-top:20px">Hackathon MVP</h3>
+<div class="card">✓ Login · modules · AR simulation UI · scenarios · assessment &amp; scoring · certificate · QR verification · Hindi demo · offline demo · admin dashboard · worker tracking · reports<br><b>Future:</b> full Android AR, real object detection, complete Santali, voice instructions, more scenarios, organization integrations, advanced analytics, large-scale deployment.</div>
+<p class="mut">Hackathon Prototype · Team SurakshaAR</p>
+</section>
+</main>
+<footer style="background:var(--navy);color:#cbd5e6;text-align:center;padding:22px 16px"><b style="color:#fff">SurakshaAR</b><br>Learn Safety. Practice Safely. Work Confidently.<br><small>Hackathon Prototype · Team SurakshaAR</small></footer>
+
+<div class="modal" id="mod"><div class="card" id="modc"></div></div>
+<div class="toast" id="toast"></div>
+<script>
+const $=id=>document.getElementById(id);
+function go(v){document.querySelectorAll('.view').forEach(e=>e.classList.toggle('on',e.id==v));document.querySelectorAll('nav .l[data-v]').forEach(b=>b.classList.toggle('on',b.dataset.v==v));scrollTo(0,0)}
+document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>go(b.dataset.v));
+function toast(t){const e=$('toast');e.textContent=t;e.style.display='block';clearTimeout(e.t);e.t=setTimeout(()=>e.style.display='none',2800)}
+function notif(){$('modc').innerHTML='<h3>🔔 Notifications</h3><p>Your Fire Safety certification expires in 15 days.</p><p>Complete your Gas Safety assessment.</p><p>Admin: 24 workers have pending mandatory training.</p><button class="btn" onclick="$(\'mod\').classList.remove(\'on\')">Close</button>';$('mod').classList.add('on')}
+$('mod').onclick=e=>{if(e.target.id=='mod')$('mod').classList.remove('on')};
+function login(){$('login').style.display='none';$('dash').style.display='block';$('dcards').style.display='grid';toast('Welcome, Rahul')}
+// language
+const L={en:['Industrial Safety Training, Reimagined with AR','Identify the emergency exit.'],hi:['एआर के साथ औद्योगिक सुरक्षा प्रशिक्षण, नए रूप में','आपातकालीन निकास की पहचान करें।'],sat:['AR ᱛᱮ ᱤᱱᱫᱚᱥᱛᱨᱤᱭᱟᱞ ᱨᱩᱠᱷᱤᱭᱟ ᱚᱨᱟᱜ','[Santali localization placeholder]']};
+$('lang').onchange=e=>{$('h1').textContent=L[e.target.value][0];$('ltxt').textContent=L[e.target.value][1]};
+// offline
+function offline(){const s=$('offst');s.textContent='Offline Mode: Active';s.style.background='#ffc61a40';s.style.color='#a56a00';setTimeout(()=>s.textContent='Syncing...',2000);setTimeout(()=>{s.textContent='✓ Data synchronized';s.style.background='#12a15025';s.style.color='var(--ok)'},3800);setTimeout(()=>s.textContent='Online',6500)}
+// modules & scenarios
+const M=[['🔥','Fire & Explosion Response','Emergency exit, extinguisher selection, evacuation sequence','Fire detected near machinery. What is your first action?',['Raise the alarm and alert others','Try to put it out alone','Finish your task first'],0,'Raising the alarm first protects everyone; fighting a fire alone delays warning.'],
+['☣','Gas Leak & Confined Space','Hazard zones, detectors, buddy system, entry procedure','You detect a possible gas leak. What should you do?',['Enter to check the source','Do not enter, raise the alarm, follow emergency procedure','Ignore the smell'],1,'Entering can be fatal. Gas may be toxic or explosive; alert and follow procedure.'],
+['⚙','Machinery Safety','Lockout/Tagout, e-stop, moving parts, pre-start checks','Maintenance is required. What must happen before it begins?',['Lockout/Tagout the machine','Slow the machine down','Ask a colleague to watch'],0,'Energy must be isolated and locked so the machine cannot restart.'],
+['⛑','PPE & Personal Safety','Helmet, goggles, gloves, shoes, ear & respiratory protection','Grinding metal near dust: which PPE is needed?',['Only a helmet','Goggles, respirator, gloves and ear protection','No PPE for short jobs'],1,'Sparks, dust and noise need eye, lung, hand and ear protection.'],
+['🚨','Emergency Evacuation','Alarm, route, assembly point, headcount, communication','The evacuation alarm sounds. Where should workers go?',['Back to the work area','The designated assembly point','Straight home'],1,'Assembly points enable a headcount so nobody is left behind.']];
+$('modgrid').innerHTML=M.map((m,i)=>`<div class="card"><div class="ico">${m[0]}</div><b>${m[1]}</b><p class="mut">${m[2]}</p><button class="btn" onclick="scn(${i})">Start Module</button> <button class="btn s" data-v="ar" onclick="go('ar')">Start AR</button></div>`).join('');
+function scn(i){if(i==0)return fire();const m=M[i],b=$('scn');b.style.display='block';b.innerHTML=`<h3>${m[0]} ${m[1]} – Scenario</h3><p><b>${m[3]}</b></p>`+m[4].map((o,j)=>`<button class="opt" onclick="pick(this,${i},${j})">${o}</button>`).join('')+'<div id="sf"></div>';b.scrollIntoView({behavior:'smooth'})}
+function pick(el,i,j){const m=M[i],ok=j==m[5];el.classList.add(ok?'ok':'no');$('sf').innerHTML=`<div class="fb ${ok?'ok':'no'}">${ok?'✓ Correct. ':'✕ Unsafe. '}${m[6]}</div>`+(ok?'<br><button class="btn" onclick="go(\'assess\');qi=0;sc=0;showQ()">Continue to Assessment</button>':'')}
+// Module 1 flow
+let fs=0,nx=0,mist=0;const S=['Raise alarm','Stop work safely','Move through designated exit','Avoid unsafe areas','Reach assembly point','Report to supervisor'];
+function fset(h){const b=$('scn');b.style.display='block';b.innerHTML=h;b.scrollIntoView({behavior:'smooth'})}
+function fire(){fs=0;fset(`<h3>🔥 Fire &amp; Explosion Response · 1/3</h3><p><b>Find the Emergency Exit</b> – smoke fills the workshop. Tap the correct exit.</p><div class="grid" style="grid-template-columns:repeat(3,1fr)">${[['Door A','🔥 Blocked by flames',0],['Door B','🟩 EXIT sign, clear path',1],['Door C','📦 Storage room',0]].map(d=>`<button class="opt" style="text-align:center;padding:24px 6px" onclick="f1(this,${d[2]})"><b>${d[0]}</b><br>${d[1]}</button>`).join('')}</div><div id="sf"></div>`)}
+function f1(el,ok){if($('sf').innerHTML)return;fs+=ok;el.classList.add(ok?'ok':'no');$('sf').innerHTML=`<div class="fb ${ok?'ok':'no'}">${ok?'✓ Correct: the marked, clear exit.':'✕ Unsafe: never use blocked doors or storage rooms. Door B was the exit.'}</div><br><button class="btn" onclick="f2()">Next</button>`}
+function f2(){fset(`<h3>🧯 Fire &amp; Explosion Response · 2/3</h3><p><b>Select the Correct Fire Extinguisher</b> – fire in an electrical control panel.</p>${['Water','CO₂','Foam','Wet cloth'].map((o,j)=>`<button class="opt" onclick="f2p(this,${j})">${o}</button>`).join('')}<div id="sf"></div>`)}
+function f2p(el,j){if($('sf').innerHTML)return;const ok=j==1;fs+=ok?1:0;el.classList.add(ok?'ok':'no');$('sf').innerHTML=`<div class="fb ${ok?'ok':'no'}">${ok?'✓ CO₂ is safe on live electrical equipment and leaves no residue.':'✕ Water and foam conduct electricity and can cause shock. Use CO₂ or dry powder.'}</div><br><button class="btn" onclick="f3()">Next</button>`}
+function f3(){nx=0;mist=0;const o=S.map((t,i)=>[t,i]).sort(()=>Math.random()-.5);fset(`<h3>🚪 Fire &amp; Explosion Response · 3/3</h3><p><b>Arrange the Evacuation Steps</b> – tap the steps in the correct order.</p><div id="stp">${o.map(x=>`<button class="opt" onclick="f3p(this,${x[1]})">${x[0]}</button>`).join('')}</div><ol id="ord" class="mut"></ol><div id="sf"></div>`)}
+function f3p(el,i){if(el.disabled)return;if(i==nx){el.classList.add('ok');el.disabled=true;$('ord').innerHTML+=`<li>${S[i]}</li>`;nx++;$('sf').innerHTML='';if(nx==6){fs+=mist==0?1:0;fend()}}else{mist++;el.classList.add('no');setTimeout(()=>el.classList.remove('no'),700);$('sf').innerHTML=`<div class="fb no">✕ Not yet. Think about what must happen first (mistakes: ${mist}).</div>`}}
+function fend(){$('sf').innerHTML=`<div class="fb ok"><b>Module complete! Score: ${fs}/3</b><br>${fs==3?'Perfect: you are Fire Safety ready. 🔥 badge earned.':'Good effort. Review the missed steps and retry for full marks.'}</div><br><button class="btn" onclick="go('assess');qi=0;sc=0;showQ()">Continue to Assessment</button> <button class="btn s" onclick="fire()">Retry</button>`}
+// AR
+const A=$('arbox');
+const ST=[['sc','Scan','Found: fire extinguisher (3 m) and emergency exit (14 m).'],['hz','Hazard','DANGER: moving machine. Stay outside the red zone and know where the E-STOP is.'],['pp','PPE','Wear helmet, goggles and gloves before going near the machine.'],['ex','Extinguisher','FIRE? The extinguisher is 3 m on your left. Pull, aim, squeeze, sweep.'],['pa','Exit','ALARM! Follow the green path to the exit, then the assembly point.'],['','Done','✓ Simulation complete. Report to your supervisor.']];
+let as=-1;
+function arDots(){$('ard').innerHTML=ST.map((_,i)=>`<span style="display:inline-block;width:24px;height:5px;margin:5px 4px 0 0;border-radius:3px;background:${i<=as?'#ffc61a':'#fff5'}"></span>`).join('')}
+function arScan(){A.classList.add('scanning');$('ari').textContent='Scanning environment…';setTimeout(()=>{A.classList.remove('scanning');A.classList.add('sc');$('ari').textContent=ST[0][2];if(as<0)$('arstep').textContent='Scan complete'},1700)}
+function arSim(){arReset();$('arnext').style.display='inline-block';$('arnext').textContent='Next Step';arNext()}
+function arNext(){as++;if(as>=ST.length){arReset();return}const s=ST[as];A.className='arx';arDots();$('arstep').textContent='Step '+(as+1)+'/6 · '+s[1];if(as==0)arScan();else{if(s[0])A.classList.add(s[0]);$('ari').textContent=s[2]}if(as==5){$('arnext').textContent='Finish';toast('Scenario complete')}}
+function arTog(c){A.classList.toggle(c);$('ari').textContent=A.classList.contains(c)?'Hazard zone highlighted: keep 2 m away.':'Hazards hidden'}
+function arIns(){const on=!A.classList.contains('pp');A.classList.toggle('pp',on);A.classList.toggle('pa',on);$('ari').textContent=on?'Wear PPE and follow the green path to the exit.':'Instructions hidden'}
+function arReset(){A.className='arx';as=-1;$('arnext').style.display='none';$('ari').textContent='Tap “Scan Environment” to begin';$('arstep').textContent='Ready';$('ard').innerHTML=''}
+// assessment
+const Q=[['What should you do when a fire alarm is activated?',['Continue working','Investigate alone','Follow the emergency evacuation procedure','Wait for someone else'],2,'Evacuate immediately along the designated route.'],
+['Before machine maintenance you must…',['Lockout/Tagout','Reduce speed','Wear a cap','Call a friend'],0,'Isolating energy prevents unexpected start-up.'],
+['You suspect a gas leak. You should…',['Enter and check','Keep working','Stay out and raise the alarm','Light a match'],2,'Never enter; alert others.'],
+['Which PPE protects against falling objects?',['Gloves','Helmet','Goggles','Vest'],1,'A helmet protects the head.'],
+['Where do you go after evacuating?',['Home','Work area','Assembly point','Canteen'],2,'The assembly point allows a headcount.'],
+['Confined-space entry requires…',['Working alone','A buddy and gas check','Speed','No permit'],1,'A standby buddy and atmosphere testing are essential.'],
+['A red emergency stop button is used to…',['Restart','Stop the machine in danger','Adjust speed','Lubricate'],1,'It halts the machine immediately.'],
+['Loud machinery area needs…',['Ear protection','Sunglasses','Scarf','Nothing'],0,'Prevents hearing damage.'],
+['Reflective vests help…',['Warmth','Visibility','Grip','Hearing'],1,'They make workers visible to vehicles.'],
+['During a drill you should…',['Ignore it','Treat it as real','Leave late','Film it'],1,'Drills build habits for real emergencies.']];
+let qi=0,sc=0;
+function showQ(){const b=$('qbox');if(qi>=Q.length){const p=Math.round(sc/Q.length*100),ok=p>=70;b.innerHTML=`<h3>Assessment Completed</h3><div class="stat">${sc}/${Q.length}</div><p>Result: <span class="pill ${ok?'ok':'no'}">${ok?'Passed':'Failed'}</span> · Required pass mark: 70%</p><button class="btn s" onclick="toast('Module-wise results shown in admin view')">View Results</button> ${ok?'<button class="btn g" onclick="mkCert('+p+')">Generate Certificate</button>':'<button class="btn" onclick="qi=0;sc=0;showQ()">Retake Assessment</button>'}`;return}
+const q=Q[qi];b.innerHTML=`<small class="mut">Question ${qi+1}/${Q.length}</small><div class="prog"><div style="width:${qi/Q.length*100}%"></div></div><h3>${q[0]}</h3>`+q[1].map((o,j)=>`<button class="opt" onclick="ans(this,${j})">${'ABCD'[j]}. ${o}</button>`).join('')+'<div id="qf"></div>'}
+function ans(el,j){const q=Q[qi];if($('qf').innerHTML)return;const ok=j==q[2];if(ok)sc++;el.classList.add(ok?'ok':'no');$('qf').innerHTML=`<div class="fb ${ok?'ok':'no'}">${ok?'✓ Correct. ':'✕ Incorrect. '}${q[3]}</div><br><button class="btn" onclick="qi++;showQ()">Next</button>`}
+showQ();
+function mkCert(p){$('cscore').textContent=p+'%';go('certs');toast('Certificate generated')}
+// QR pseudo
+$('qr').innerHTML=Array.from({length:81},(_,i)=>{const r=Math.floor(i/9),c=i%9,f=(r<3&&c<3)||(r<3&&c>5)||(r>5&&c<3);return`<i class="${f||((i*7+r*3)%3==0)?'':'w'}"></i>`}).join('');
+function fillVerify(){$('cid').value='SAR-JH-2026-004821';verify();$('vsec').scrollIntoView({behavior:'smooth'})}
+function scanQR(){$('cid').value='SAR-JH-2026-004821';toast('QR scanned');verify()}
+function verify(){const v=$('cid').value.trim().toUpperCase(),r=$('vres');r.style.display='block';if(v=='SAR-JH-2026-004821'){r.className='fb ok';r.innerHTML='<b style="color:var(--ok)">✓ Certificate Verified</b><br>Worker: Rahul Kumar<br>Training: Fire &amp; Explosion Response<br>Score: 84% · Issued: 28 Sep 2026<br>Status: <b style="color:var(--ok)">● VALID</b>'}else{r.className='fb no';r.innerHTML='<b>✕ Certificate Not Found</b><br>Check the ID or contact the issuer.'}}
+// workers
+const W=[['Rahul Kumar','JH-MIN-004821','Miner','Dhanbad','Mining','Completed','84%','Active','28 Sep 2027'],['Sunita Devi','JH-STL-001102','Operator','Bokaro','Steel','Completed','91%','Active','12 Mar 2027'],['Amit Oraon','JH-MFG-002377','Technician','Ranchi','Manufacturing','Pending','—','Expired','04 Aug 2026'],['Mohan Tudu','JH-MIC-000914','Sorter','Jamshedpur','Mica','Completed','77%','Expiring','10 Oct 2026'],['Priya Singh','JH-MIN-004990','Supervisor','Dhanbad','Mining','Pending','62%','Expiring','21 Oct 2026'],['Rakesh Munda','JH-STL-001455','Welder','Bokaro','Steel','Completed','88%','Active','30 Jan 2027']];
+function filt(){const q=$('q').value.toLowerCase(),l=$('fl').value,s=$('fs').value,c=$('fc').value;
+$('wt').innerHTML=W.map((w,i)=>[w,i]).filter(([w])=>(!q||(w[0]+w[1]).toLowerCase().includes(q))&&(!l||w[3]==l)&&(!s||w[5]==s)&&(!c||w[7]==c)).map(([w,i])=>`<tr><td>${w[0]}</td><td>${w[1]}</td><td>${w[2]}</td><td>${w[3]}</td><td><span class="pill ${w[5]=='Completed'?'ok':'w'}">${w[5]}</span></td><td>${w[6]}</td><td><span class="pill ${w[7]=='Active'?'ok':w[7]=='Expired'?'no':'w'}">${w[7]}</span></td><td>${w[8]}</td><td><button class="btn s" onclick="prof(${i})">Profile</button></td></tr>`).join('')||'<tr><td colspan=9>No workers match.</td></tr>'}
+filt();
+function prof(i){const w=W[i];$('modc').innerHTML=`<h3>${w[0]}</h3><p class="mut">${w[1]} · ${w[4]} · ${w[3]}</p><p>Training completion: <b>${i==0?'85%':w[5]=='Completed'?'100%':'60%'}</b></p><div class="prog"><div style="width:${i==0?85:w[5]=='Completed'?100:60}%"></div></div>
+<p>✓ Fire Safety · ✓ PPE Safety · ✓ Machinery Safety · ✓ Emergency Evacuation<br>${i==0||w[5]=='Pending'?'○ Gas Leak &amp; Confined Space (pending)':'✓ Gas Leak &amp; Confined Space'}</p>
+<b>Assessment history</b><p class="mut">12 Aug 2026 · Machinery · 79%<br>15 Sep 2026 · PPE · 90%<br>28 Sep 2026 · Fire &amp; Explosion · ${w[6]}</p><b>Certificate</b><p class="mut">${w[7]} · Expires ${w[8]}</p><button class="btn" onclick="$('mod').classList.remove('on')">Close</button>`;$('mod').classList.add('on')}
+function rep(){const r=$('rprev');r.style.display='block';r.innerHTML=`<b>${$('rp').value} — Preview</b><br>Period: Sep 2026 · Workers: 1,248 · Trained: 1,086 (87%) · Avg score: 82%<br>Certificates: 932 active, 74 expiring, 60 expired<br>Lowest module: Gas &amp; Confined Space (76%)`}
+// demo
+function demo(){const s=[['worker','1. Worker Login'],['modules','2. Select Training'],['ar','3. Start AR Simulation'],['modules','4. Complete Safety Scenario'],['assess','5. Take Assessment'],['certs','6. Receive Certificate'],['certs','7. Employer Verifies Certificate']];let i=0;(function n(){if(i>=s.length){toast('Demo finished');return}go(s[i][0]);toast(s[i][1]);if(i==2)arSim();i++;setTimeout(n,2600)})()}
+</script></body></html>
